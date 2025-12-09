@@ -57,12 +57,16 @@ yearSelect.onchange = monthSelect.onchange = function () {
 
 
 function editDay(year, month, day) {
+    if(taskModal.style.display ==="none")
+    {
+    taskModal.style.display ="block"
     currentDate = `${year}-${month+1}-${day}`;
     modalTitle.textContent = currentDate;
     taskTextarea.value = localStorage.getItem(currentDate) || "";
     taskTextarea.readOnly = true;
     editBtn.style.display = "inline-block";
-    taskModal.style.display = "block";
+    }
+   
     editFooter.className="d-none";
 }
 
@@ -77,10 +81,14 @@ function enableEdit() {
 }
 
 function cancelEdit() {
+    const answer=confirm("Are you sure you want to discard your changes?")
+    if(answer)
+    {
     taskTextarea.value = localStorage.getItem(currentDate) || "";
     taskTextarea.readOnly = true;
     editBtn.style.display = "inline-block";
     editFooter.className ="d-none";
+    }
 }
 
 function saveTask() {
