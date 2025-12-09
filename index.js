@@ -21,7 +21,7 @@ function generateCalendar(year, month) {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    let html = `<table class="table table-bordered text-center">
+    let html = `<table class="custom-calendar text-center">
         <thead>
             <tr>
                 <th>Su</th><th>Mo</th><th>Tu</th><th>We</th>

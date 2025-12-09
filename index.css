@@ -40,3 +40,42 @@
     justify-content: space-between;
     margin-top: 10px;
 }
+
+
+
+
+/*设置表格样式*/
+/* 步骤 1: 设置表格的基本样式 */
+.custom-calendar {
+    /* 移除浏览器默认的单元格间距 */
+    border-collapse: collapse; 
+    width: 100%; /* 确保表格宽度合适 */
+}
+
+/* 步骤 2: 为所有表头（Th）和数据单元格（Td）设置边框 */
+.custom-calendar th,
+.custom-calendar td {
+    /* 统一设置边框样式，例如 1px 实线灰色 */
+    border: 1px solid #ccc;
+    padding: 8px; /* 增加内边距 */
+    width: 14.28%;
+    height: 40px; /* 统一单元格高度 */
+    /* 重点：默认情况下，我们只给单元格设置右边框和底边框 */
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    
+    /* 移除掉冗余的上边框和左边框，因为它们会被相邻单元格的底边和右边覆盖 */
+    border-top: none; 
+    border-left: none;
+}
+
+/* 恢复最顶部的边框 (表头的上边框) */
+.custom-calendar thead th {
+    border-top: 1px solid #ccc;
+}
+
+/* 恢复最左侧一列的左边框 (即 Sun 所在的列) */
+.custom-calendar th:first-child,
+.custom-calendar td:first-child {
+    border-left: 1px solid #ccc;
+}
