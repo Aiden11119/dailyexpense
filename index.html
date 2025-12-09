@@ -19,7 +19,7 @@
         border-radius: 6px;
         font-weight: bold;
     }
-    
+
     </style>
   </head>
   <body>
@@ -49,6 +49,10 @@
         </div>
     
         <div id="calendar"></div>
+
+        <div class="tip">
+             (*Double-click a date to edit or view the tasks for that day)
+        </div>
     </div>
 
 
@@ -90,6 +94,12 @@
         `;
 
         // 空白格
+        for (let i = 0; i < firstDay; i++) {
+        html += "<td></td>";
+        }
+
+
+        //开始填日期
         for (let d = 1; d <= daysInMonth; d++) {
          if ((firstDay + d - 1) % 7 === 0) html += "</tr><tr>";
 
