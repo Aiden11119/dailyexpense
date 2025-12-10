@@ -101,6 +101,7 @@ function editDay(year, month, day) {
 //关掉dailyexpense
 function closeModal() {
     saveExpenses();
+    generateCalendar(Number(yearSelect.value), Number(monthSelect.value));
     taskModal.style.display = "none";
 }
 
