@@ -21,7 +21,7 @@ function generateCalendar(year, month) {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // 月总额显示
+    // 每月总额显示
     const monthKey = `${year}-${month+1}`;
     const monthTotal = parseFloat(localStorage.getItem(monthKey)) || 0;
     document.getElementById("Montlytotal").innerHTML = monthTotal.toFixed(2);
