@@ -6,10 +6,13 @@ const modalTitle = document.getElementById("modalTitle");
 
 let currentDate = null;
 
+//创建年份
 const currentYear = new Date().getFullYear();
 for (let y = currentYear - 10; y <= currentYear + 10; y++) {
     yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
 }
+
+
 yearSelect.value = currentYear;
 monthSelect.value = new Date().getMonth();
 
@@ -17,7 +20,9 @@ monthSelect.value = new Date().getMonth();
 function generateCalendar(year, month) {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const monthKey = `${year}-${month+1}`; // month+1 保持 1~12
+
+    // 月总额显示
+    const monthKey = `${year}-${month+1}`;
     const monthTotal = parseFloat(localStorage.getItem(monthKey)) || 0;
     document.getElementById("Montlytotal").innerHTML = monthTotal.toFixed(2);
 
@@ -30,22 +35,45 @@ function generateCalendar(year, month) {
         </thead>
         <tbody><tr>`;
 
+    // 空白格
     for (let i = 0; i < firstDay; i++) html += "<td></td>";
 
+    // 日期格子
     for (let d = 1; d <= daysInMonth; d++) {
+
         if ((firstDay + d - 1) % 7 === 0) html += "</tr><tr>";
 
+        // 🔹 判断今天
         const isToday = year == new Date().getFullYear() &&
                         month == new Date().getMonth() &&
                         d == new Date().getDate();
         const className = isToday ? "today" : "";
 
-        html += `<td class="${className}" ondblclick="editDay(${year}, ${month}, ${d})">${d}</td>`;
+        // 🔹 计算每天总额
+        const dayKey = `${year}-${month+1}-${d}`;
+        const dayData = JSON.parse(localStorage.getItem(dayKey)) || [];
+
+        let dayTotal = 0;
+        dayData.forEach(item => {
+            dayTotal += parseFloat(item.price) || 0;
+        });
+
+        dayTotal = dayTotal.toFixed(2);
+        const spanHtml = dayTotal > 0 
+        ? `<span class="day-total">${dayTotal}</span>` 
+        : "";
+
+
+        // 🔹 显示日期 + 小青色角标
+        html += `
+        <td class="${className} calendar-day" ondblclick="editDay(${year}, ${month}, ${d})">
+            ${d}
+            ${spanHtml}
+        </td>`;
     }
 
     html += "</tr></tbody></table>";
     calendar.innerHTML = html;
-
 }
 
 
@@ -57,6 +85,8 @@ yearSelect.onchange = monthSelect.onchange = function () {
 }
 
 
+
+//点进去日期的时候
 function editDay(year, month, day) {
     if(taskModal.style.display ==="none")
     {
@@ -68,12 +98,14 @@ function editDay(year, month, day) {
     }
 }
 
+//关掉dailyexpense
 function closeModal() {
     saveExpenses();
     taskModal.style.display = "none";
 }
 
 
+//给daily expense加行
 function addRow() {
     const body = document.getElementById("expenseBody");
     const row = document.createElement("tr");
@@ -90,6 +122,7 @@ function addRow() {
 
     body.appendChild(row);
 }
+
 
 function updateTotal() {
     let total = 0;
